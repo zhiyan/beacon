@@ -219,7 +219,7 @@ Beacon.prototype.cookie = function( key , value , options ){
 /**
  * 发送数据
  */
-Beacon.prototype.send = function(params){
+Beacon.prototype.send = function(params, content){
     if(typeof params === 'string'){
         params = {
             _bc_type: params
@@ -227,6 +227,11 @@ Beacon.prototype.send = function(params){
     }else{
         params = params || {}
     }
+
+    if(content){
+        params._bc_con = content
+    }
+
     new Image().src= this.url + '?' + this.formatParams($.extend({t: +new Date() + Math.random(),}, this.data, params))
 }
 
