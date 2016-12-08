@@ -16,7 +16,7 @@ function Beacon(){
 
 Beacon.prototype.version = '0.1'
 
-Beacon.prototype.url = '//192.168.151.72:8081/test/bc.gif'
+Beacon.prototype.url = document.location.protocol + '//192.168.145.2:8080/er.gif'
 
 /**
  * 初始化基本数据
@@ -42,6 +42,12 @@ Beacon.prototype.initData = function(){
 
         // 页面id
         _bc_pid: window.pageId || ''
+    }
+
+    if(window.BEACON_INIT_DATA){
+        for(var i in window.BEACON_INIT_DATA){
+            this.data[i] = window.BEACON_INIT_DATA[i]
+        }
     }
 }
 
@@ -125,7 +131,6 @@ Beacon.prototype.GetBrowserVersion = function(){
  * 格式化参数
  */
 Beacon.prototype.formatParams = function(params){
-    console.log(params)
     var s = []
     for( var k in params ) {
       s.push( k + '=' + encodeURIComponent(params[k]) )

@@ -57,6 +57,15 @@
 		</div>
 	</div>
 
-	<script src="../index.js"></script>
+<script>
+		var BEACON_INIT_DATA = {
+			msg: 'error'
+		};
+    (function() {
+        var bc = document.createElement('script'); bc.type = 'text/javascript'; bc.async = true;
+        bc.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + '192.168.145.9:8011/jinrong/assets/beacon/bc.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(bc, s);
+    })();
+</script>
 </body>
 </html>
