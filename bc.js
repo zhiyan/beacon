@@ -2,13 +2,27 @@
  * Beacon system
  */
 function Beacon(){
+    this.initOption = $.extend({
+        event: true,
+        uv: true,
+        pv: true
+    }, window.BEACON_INIT || {})
+    
     this.initData()
-    this.send('pv')
-    this.bindEvent()
 
-    if(!this.cookie('__bc__')){
-        this.cookie('__bc__', this.uuid(), {expires:1/*, domain:'.daikuan.com'*/})
-        this.send('uv')
+    if(this.initOption.pv){
+        this.send('pv')
+    }
+
+    if(this.initOption.event){
+        this.bindEvent()
+    }
+
+    if(this.initOption.uv){
+        if(!this.cookie('__bc__')){
+            this.cookie('__bc__', this.uuid(), {expires:1/*, domain:'.daikuan.com'*/})
+            this.send('uv')
+        }
     }
 
     this.cache = []
@@ -22,7 +36,7 @@ Beacon.prototype.url = document.location.protocol + '//192.168.145.2:8080/er.gif
  * 初始化基本数据
  */
 Beacon.prototype.initData = function(){
-    this.data = {
+    this.data = $.extend({
         // 客户端
         _bc_sys: this.GetWindowsVersion(),
 
@@ -42,13 +56,7 @@ Beacon.prototype.initData = function(){
 
         // 页面id
         _bc_pid: window.pageId || ''
-    }
-
-    if(window.BEACON_INIT_DATA){
-        for(var i in window.BEACON_INIT_DATA){
-            this.data[i] = window.BEACON_INIT_DATA[i]
-        }
-    }
+    }, this.initOption.data || {})
 }
 
 /**
