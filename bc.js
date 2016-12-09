@@ -38,24 +38,27 @@ Beacon.prototype.url = document.location.protocol + '//192.168.145.2:8080/er.gif
 Beacon.prototype.initData = function(){
     this.data = $.extend({
         // 客户端
-        _bc_sys: this.GetWindowsVersion(),
+        // _bc_sys: this.GetWindowsVersion(),
 
         // 屏幕尺寸
-        _bc_scr: this.GetScreenSize(),
+        scr: this.GetScreenSize(),
+
+        // title
+        title: document.title,
 
         // 浏览器useragent
-        _bc_ua: this.GetBrowserVersion(),
+        // _bc_ua: this.GetBrowserVersion(),
 
-        _bc_url: window.location.origin + window.location.pathname,
+        requrl: window.location.href,
 
-        _bc_host: window.location.host,
+        // _bc_host: window.location.host,
 
-        _bc_param: window.location.search,
+        // _bc_param: window.location.search,
 
-        _bc_ref: document.referrer || '-1',
+        refurl: document.referrer || '',
 
         // 页面id
-        _bc_pid: window.pageId || ''
+        // _bc_pid: window.pageId || ''
     }, this.initOption.data || {})
 }
 
@@ -157,39 +160,15 @@ Beacon.prototype.bindEvent = function(){
             var tag = element.tagName.toLowerCase()
             var $element = $(element)
             var data = {
-                _bc_type:'clk',
-                _bc_tag: tag
+                etype:'clk',
+                etag: tag,
+                eid : $element.attr('id') || '',
+                etxt: $element.text().replace(/\s/g,'').substring(0,10) || ''
             }
 
-            var refData = {
-                track : $element.attr('data-trackerid'),
-                id : $element.attr('id'),
-                name: $element.attr('name'),
-                text: $element.text().replace(/\s/g,'').substring(0,10),
-            }
-
-            $.each(refData, function(key, value){
-                if(value){
-                    refData[key] = '['+key+']'+value
-                }
-            })
-
-            switch(tag){
-                // case 'a':
-                    // data._bc_con = refData.track || refData.id || refData.text
-                    // break
-                case 'input':
-                case 'textarea':
-                case 'select':
-                    data._bc_con = refData.track || refData.name || refData.id
-                    break
-                default:
-                    data._bc_con = refData.track || refData.id || refData.text
-                    break
-            }
-            if(data._bc_con && that.cache.indexOf(data._bc_con) < 0){
+            if(that.cache.indexOf(element) < 0){
                 that.send(data)
-                that.setCache(data._bc_con)
+                that.setCache(element)
             }
         }
     })
@@ -232,20 +211,19 @@ Beacon.prototype.cookie = function( key , value , options ){
 /**
  * 发送数据
  */
-Beacon.prototype.send = function(params, content){
+Beacon.prototype.send = function(params, msg){
     if(typeof params === 'string'){
         params = {
-            _bc_type: params
+            etype: params
         }
     }else{
         params = params || {}
     }
 
-    if(content){
-        params._bc_con = content
+    if(msg){
+        params.msg = msg
     }
-
-    new Image().src= this.url + '?' + this.formatParams($.extend({t: +new Date() + Math.random(),}, this.data, params))
+    new Image().src= this.url + '?' + this.formatParams($.extend({t: +new Date() + Math.random()}, this.data, params))
 }
 
 /**
@@ -267,12 +245,22 @@ Beacon.prototype.uuid = function() {
     })
 }
 
-Beacon.prototype.setCache = function(content){
+Beacon.prototype.setCache = function(element){
     var that = this
-    this.cache.push(content)
+    this.cache.push(element)
     setTimeout(function(){
-        that.cache.splice(that.cache.indexOf(content), 1)
+        that.cache.splice(that.cache.indexOf(element), 1)
     },3000)
+}
+
+Beacon.prototype.info = function(msg){
+    this.send(1, msg || '')
+}
+Beacon.prototype.error = function(msg){
+    this.send(2, msg || '')
+}
+Beacon.prototype.debug = function(msg){
+    this.send(3, msg || '')
 }
 
 window.beacon = window.bc = new Beacon()
