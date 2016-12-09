@@ -1,0 +1,22 @@
+{
+  "name": "beacon",
+  "version": "1.0.0",
+  "description": "",
+  "main": "bc.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "build" : "uglifyjs ./bc.js -o ./dist/beacon/bc.js",
+    "sync" : "cd dist && rsync -rltpD --chmod=ugo=rwX beacon 192.168.145.9::dev1/jinrong/assets/ --exclude '.DS_Store' && rsync -rltpD --chmod=ugo=rwX beacon 192.168.145.9::dev2/jinrong/assets/ --exclude '.DS_Store' && rsync -rltpD --chmod=ugo=rwX beacon 192.168.15.153::beta1/jinrong/assets/ --exclude '.DS_Store' && rsync -rltpD --chmod=ugo=rwX beacon 192.168.15.153::beta2/jinrong/assets/ --exclude '.DS_Store'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@gitlab.daikuan.com:fe/beacon.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "uglify-js": "^2.7.5"
+  }
+}

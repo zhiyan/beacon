@@ -3,7 +3,7 @@
 ### 页面引用
     (function() {
             var bc = document.createElement('script'); bc.type = 'text/javascript'; bc.async = true;
-            bc.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + '192.168.151.72:8081/index.js';
+            bc.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + '192.168.145.9:8011/jinrong/assets/beacon/bc.js';
             var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(bc, s);
     })();
 
