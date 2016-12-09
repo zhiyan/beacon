@@ -46,6 +46,9 @@ Beacon.prototype.initData = function(){
         // title
         title: document.title,
 
+        // 客户端语言
+        lang: navigator.language,
+
         // 浏览器useragent
         // _bc_ua: this.GetBrowserVersion(),
 
@@ -223,6 +226,7 @@ Beacon.prototype.send = function(params, msg){
     if(msg){
         params.msg = msg
     }
+    // console.log($.extend({t: +new Date() + Math.random()}, this.data, params))
     new Image().src= this.url + '?' + this.formatParams($.extend({t: +new Date() + Math.random()}, this.data, params))
 }
 
