@@ -19,18 +19,25 @@ function Beacon(){
     }
 
     if(this.initOption.uv){
-        if(!this.cookie('__bc__')){
-            this.cookie('__bc__', this.uuid(), {expires:1/*, domain:'.daikuan.com'*/})
+        if(!this.cookie('_utrace')){
+            this.cookie('_utrace', this.uuid(), {expires:1/*, domain:'.daikuan.com'*/})
             this.send('uv')
+        }
+    }
+
+    if(this.initOption.trigger){
+        if(this[this.initOption.trigger.type]){
+            this[this.initOption.trigger.type](this.initOption.trigger.msg)
         }
     }
 
     this.cache = []
 }
 
-Beacon.prototype.version = '0.1'
+Beacon.prototype.version = '0.2'
 
-Beacon.prototype.url = document.location.protocol + '//192.168.145.2:8080/er.gif'
+Beacon.prototype.url = document.location.protocol + '//192.168.145.2:8080/dt.gif'
+Beacon.prototype.errUrl = document.location.protocol + '//192.168.145.2:8080/rd.gif'
 
 /**
  * 初始化基本数据
@@ -226,8 +233,9 @@ Beacon.prototype.send = function(params, msg){
     if(msg){
         params.msg = msg
     }
+
     // console.log($.extend({t: +new Date() + Math.random()}, this.data, params))
-    new Image().src= this.url + '?' + this.formatParams($.extend({t: +new Date() + Math.random()}, this.data, params))
+    new Image().src= ( params.type ? this.errUrl : this.url) + '?' + this.formatParams($.extend({t: +new Date() + Math.random()}, this.data, params))
 }
 
 /**
@@ -258,13 +266,13 @@ Beacon.prototype.setCache = function(element){
 }
 
 Beacon.prototype.info = function(msg){
-    this.send(1, msg || '')
+    this.send({type:1}, msg || '')
 }
 Beacon.prototype.error = function(msg){
-    this.send(2, msg || '')
+    this.send({type:2}, msg || '')
 }
 Beacon.prototype.debug = function(msg){
-    this.send(3, msg || '')
+    this.send({type:3}, msg || '')
 }
 
 window.beacon = window.bc = new Beacon()
