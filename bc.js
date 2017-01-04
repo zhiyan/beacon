@@ -36,8 +36,8 @@ function Beacon(){
 
 Beacon.prototype.version = '0.2'
 
-Beacon.prototype.url = document.location.protocol + '//192.168.145.2:8080/dt.gif'
-Beacon.prototype.errUrl = document.location.protocol + '//192.168.145.2:8080/rd.gif'
+Beacon.prototype.url = document.location.protocol + '//dt.daikuan.com/dt.gif'
+Beacon.prototype.errUrl = document.location.protocol + '//dt.daikuan.com/rd.gif'
 
 /**
  * 初始化基本数据
