@@ -20,7 +20,7 @@ function Beacon(){
 
     if(this.initOption.uv){
         if(!this.cookie('_utrace')){
-            this.cookie('_utrace', this.uuid(), {expires:1/*, domain:'.daikuan.com'*/})
+            this.cookie('_utrace', this.uuid(), {expires:1, domain:'.daikuan.com'})
             this.send('uv')
         }
     }
