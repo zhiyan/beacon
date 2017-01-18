@@ -54,7 +54,7 @@ Beacon.prototype.initData = function(){
         title: document.title,
 
         // 客户端语言
-        lang: navigator.language,
+        lang: (navigator.language || navigator.browserLanguage).toLowerCase(),
 
         // 浏览器useragent
         // _bc_ua: this.GetBrowserVersion(),
