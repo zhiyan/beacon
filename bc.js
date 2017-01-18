@@ -10,10 +10,6 @@ function Beacon(){
     
     this.initData()
 
-    if(this.initOption.pv){
-        this.send('pv')
-    }
-
     if(this.initOption.event){
         this.bindEvent()
     }
@@ -23,6 +19,10 @@ function Beacon(){
             this.cookie('_utrace', this.uuid(), {expires:1, domain:'.daikuan.com'})
             // this.send('uv')
         }
+    }
+
+    if(this.initOption.pv){
+        this.send('pv')
     }
 
     if(this.initOption.trigger){
@@ -169,11 +169,14 @@ Beacon.prototype.bindEvent = function(){
             var element = $(this).closest('a')[0] || this
             var tag = element.tagName.toLowerCase()
             var $element = $(element)
+            var elementTrack = $element.attr('trackid') ? '[trackid]' + $element.attr('trackid') : ''
+            var elementClass = $element.attr('class') ? '[class]' + $element.attr('class') : ''
+            var elementTitle = $element.attr('title') ? '[title]' + $element.attr('title') : ''
             var data = {
                 etype:'clk',
                 etag: tag,
                 eid : $element.attr('id') || '',
-                etxt: $element.text().replace(/\s/g,'').substring(0,10) || ''
+                etxt: elementTrack || $element.text().replace(/\s/g,'').substring(0,10) || elementTitle || elementClass || ''
             }
 
             if(that.cache.indexOf(element) < 0){
