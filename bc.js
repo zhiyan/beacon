@@ -209,10 +209,10 @@ Beacon.prototype.cookie = function( key , value , options ){
       return (document.cookie = [
               encodeURIComponent(key), '=',
               options.raw ? value : encodeURIComponent(value),
-              options.expires ? '; expires=' + options.expires.toUTCString() : '',
-              options.path ? '; path=' + options.path : '; path=/',
-              options.domain ? '; domain=' + options.domain : '',
-              options.secure ? '; secure' : ''
+              options.expires ? ';expires=' + options.expires.toUTCString() : '',
+              options.path ? ';path=' + options.path : ';path=/',
+              options.domain ? ';domain=' + options.domain : '',
+              options.secure ? ';secure' : ''
       ].join(''))
     }
 
@@ -254,10 +254,17 @@ Beacon.prototype.detectElement = function(element){
  * 生成uuid
  */
 Beacon.prototype.uuid = function() {
-    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+    var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
         var r = Math.random()*16|0, v = c === 'x' ? r : (r&0x3|0x8)
         return v.toString(16)
     })
+
+    // 若uuid空的情况下（具体浏览器未知）, 保证拿到一个不重复的值
+    if(!uuid){
+        uuid = +new Date()+'-'+Math.round(Math.random()*100000)
+    }
+
+    return uuid
 }
 
 Beacon.prototype.setCache = function(element){
