@@ -54,7 +54,7 @@ Beacon.prototype.initData = function(){
         title: document.title,
 
         // 客户端语言
-        lang: (navigator.language || navigator.browserLanguage).toLowerCase(),
+        lang: (navigator.language || navigator.browserLanguage || '').toLowerCase(),
 
         // 浏览器useragent
         // _bc_ua: this.GetBrowserVersion(),
@@ -169,14 +169,11 @@ Beacon.prototype.bindEvent = function(){
             var element = $(this).closest('a')[0] || this
             var tag = element.tagName.toLowerCase()
             var $element = $(element)
-            var elementTrack = $element.attr('trackid') ? '[trackid]' + $element.attr('trackid') : ''
-            var elementClass = $element.attr('class') ? '[class]' + $element.attr('class') : ''
-            var elementTitle = $element.attr('title') ? '[title]' + $element.attr('title') : ''
             var data = {
                 etype:'clk',
                 etag: tag,
-                eid : $element.attr('id') || '',
-                etxt: elementTrack || $element.text().replace(/\s/g,'').substring(0,10) || elementTitle || elementClass || ''
+                eid : that.getXpath($element[0]),
+                etxt: $element.text().replace(/\s/g,'')
             }
 
             if(that.cache.indexOf(element) < 0){
@@ -238,9 +235,27 @@ Beacon.prototype.send = function(params, msg){
     }
 
     // console.log($.extend({t: +new Date() + Math.random()}, this.data, params))
+    // return false
+
     new Image().src= ( params.type ? this.errUrl : this.url) + '?' + this.formatParams($.extend({t: +new Date() + Math.random()}, this.data, params))
 }
 
+
+Beacon.prototype.getXpath = function(element){
+    var parent = element.parentElement
+    var path = element.tagName.toLowerCase()
+    var similar
+
+    if(element.id){
+        path += element.id ? '#' + element.id : ''
+    }else{
+        path += element.className ? '.' + element.className.split(' ').join('.') : ''
+        similar = $(parent).find(path)
+        path += similar.length > 1 ? '[' + similar.index(element) + ']' : ''
+    }
+
+    return element === document.body ? '' : this.getXpath(parent) + '/' + path
+}
 /**
  * 确认元素是否符合条件
  */
