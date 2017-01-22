@@ -34,7 +34,7 @@ function Beacon(){
     this.cache = []
 }
 
-Beacon.prototype.version = '0.2'
+Beacon.prototype.version = '0.5'
 
 Beacon.prototype.url = document.location.protocol + '//dt.daikuan.com/dt.gif'
 Beacon.prototype.errUrl = document.location.protocol + '//dt.daikuan.com/rd.gif'
@@ -300,6 +300,20 @@ Beacon.prototype.debug = function(msg){
     this.send({type:3}, msg || '')
 }
 
-window.beacon = window.bc = new Beacon()
+
+var lib_ensurance = function(){
+    var ENC_ID = setInterval(function(){
+        if(window.jQuery || window.Zepto){
+            if(!window.$){
+                window.$ = window.jQuery || window.Zepto
+            }
+            clearInterval(ENC_ID)
+            window.beacon = window.bc = new Beacon()
+        }
+    },200)
+}
+
+lib_ensurance()
+
 
 
