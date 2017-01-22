@@ -260,6 +260,9 @@ Beacon.prototype.getXpath = function(element){
  * 确认元素是否符合条件
  */
 Beacon.prototype.detectElement = function(element){
+    if(window.Zepto){
+        return true
+    }
     return !element.children.length && !$(element).closest('a').length
         || element.tagName === 'SELECT' 
         || element.tagName === 'A'
