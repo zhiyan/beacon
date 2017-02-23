@@ -13,18 +13,18 @@
             uv: true,
             pv: true
         }, window.BEACON_INIT || {})
-        
-        this.initData()
-
-        if(this.initOption.event){
-            this.bindEvent()
-        }
 
         if(this.initOption.uv){
             if(!this.cookie('_utrace')){
                 this.cookie('_utrace', this.uuid(), {expires:1, domain:'.daikuan.com'})
                 // this.send('uv')
             }
+        }
+        
+        this.initData()
+
+        if(this.initOption.event){
+            this.bindEvent()
         }
 
         if(this.initOption.pv){
@@ -50,6 +50,8 @@
      */
     Beacon.prototype.initData = function(){
         this.data = $.extend({
+
+        		uid: this.cookie('_utrace'),
 
             // 屏幕尺寸
             scr: this.GetScreenSize(),
