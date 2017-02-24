@@ -16,7 +16,7 @@
 
         if(this.initOption.uv){
             if(!this.cookie('_utrace')){
-                this.cookie('_utrace', this.uuid(), {expires:1, domain:'.daikuan.com'})
+                this.cookie('_utrace', this.uuid(), {expires:1, domain: document.domain.match(/\.[^\.]+\.[^\.]+$/)[0]})
                 // this.send('uv')
             }
         }
@@ -167,9 +167,6 @@
         if(msg){
             params.msg = msg
         }
-
-        // console.log($.extend({t: +new Date() + Math.random()}, this.data, params))
-        // return false
 
         new Image().src= ( params.type ? this.errUrl : this.url) + '?' + this.formatParams($.extend({t: +new Date() + Math.random()}, this.data, params))
     }
