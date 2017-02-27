@@ -20,7 +20,7 @@
             		if(domain && domain.length){
             			domain = domain[0]
             		}else{
-            			domain = document.domain
+            			domain = '.' + document.domain
             		}
                 this.cookie('_utrace', this.uuid(), {expires:1, domain: domain})
                 // this.send('uv')
