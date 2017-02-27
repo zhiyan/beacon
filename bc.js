@@ -16,7 +16,13 @@
 
         if(this.initOption.uv){
             if(!this.cookie('_utrace')){
-                this.cookie('_utrace', this.uuid(), {expires:1, domain: document.domain.match(/\.[^\.]+\.[^\.]+$/)[0]})
+            		var domain = document.domain.match(/\.[^\.]+\.[^\.]+$/)
+            		if(domain && domain.length){
+            			domain = domain[0]
+            		}else{
+            			domain = document.domain
+            		}
+                this.cookie('_utrace', this.uuid(), {expires:1, domain: domain})
                 // this.send('uv')
             }
         }
