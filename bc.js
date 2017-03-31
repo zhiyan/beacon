@@ -186,7 +186,7 @@
         if(element.id){
             path += element.id ? '#' + element.id : ''
         }else{
-            path += element.className ? '.' + element.className.replace(/\s+/g,' ').split(' ').join('.') : ''
+            path += element.className ? '.' + element.className.replace(/^\s+|\s+$/g,'').replace(/\s+/g,' ').split(' ').join('.') : ''
             similar = $(parent).find(path)
             path += similar.length > 1 ? '[' + similar.index(element) + ']' : ''
         }
