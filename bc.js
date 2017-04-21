@@ -170,8 +170,10 @@
             params = params || {}
         }
 
-        if(msg){
-            params.msg = msg
+        if(typeof msg === 'object'){
+        	$.extend(params, msg)
+        }else if(msg){
+        	params.msg = msg
         }
 
         new Image().src= ( params.type ? this.errUrl : this.url) + '?' + this.formatParams($.extend({t: +new Date() + Math.random()}, this.data, params))
@@ -236,6 +238,15 @@
     Beacon.prototype.debug = function(msg){
         this.send({type:3}, msg || '')
     }
+
+    // 对外提供便捷方法
+    $(['clk', 'pv', 'exp']).each(function(key, etype){
+    	Beacon.prototype[etype] = function(data){
+    		var params = data || {}
+    		params.etype = etype
+    		this.send(params)
+    	}
+    })
 
     window.beacon = window.bc = new Beacon()
 
