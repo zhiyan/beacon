@@ -46,7 +46,7 @@
         this.cache = []
     }
 
-    Beacon.prototype.version = '0.5'
+    Beacon.prototype.version = '0.6'
 
     Beacon.prototype.url = document.location.protocol + '//dt.daikuan.com/dt.gif'
     Beacon.prototype.errUrl = document.location.protocol + '//dt.daikuan.com/rd.gif'
