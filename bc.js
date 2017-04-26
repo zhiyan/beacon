@@ -47,7 +47,7 @@ n.dequeue(a,b)};"inprogress"===e&&(e=c.shift(),d--),e&&("fx"===b&&c.unshift("inp
         this.cache = []
     }
 
-    Beacon.prototype.version = '1.0.0-alpha.1'
+    Beacon.prototype.version = '1.0.0-alpha.3'
 
     Beacon.prototype.url = document.location.protocol + '//dt.daikuan.com/dt.gif'
     Beacon.prototype.errUrl = document.location.protocol + '//dt.daikuan.com/rd.gif'
@@ -142,7 +142,11 @@ n.dequeue(a,b)};"inprogress"===e&&(e=c.shift(),d--),e&&("fx"===b&&c.unshift("inp
     	if('visibilityState' in document && 'hidden' in document){
 	    	document.addEventListener('visibilitychange', function(){
 	    		if(!document.hidden && !that.getSessionStatus()){
-	    			that.send('pv')
+	    			setTimeout(function(){
+	    				if(!document.hidden){
+			    			that.send('pv')
+	    				}
+	    			},3000)
 	    		}
 	    	})
     	}
