@@ -23,7 +23,6 @@
             			domain = '.' + document.domain
             		}
                 this.cookie('_utrace', this.uuid(), {expires:1, domain: domain})
-                // this.send('uv')
             }
         }
         
@@ -46,7 +45,7 @@
         this.cache = []
     }
 
-    Beacon.prototype.version = '0.6'
+    Beacon.prototype.version = '0.7'
 
     Beacon.prototype.url = document.location.protocol + '//dt.daikuan.com/dt.gif'
     Beacon.prototype.errUrl = document.location.protocol + '//dt.daikuan.com/rd.gif'
@@ -70,14 +69,7 @@
 
             requrl: window.location.href,
 
-            // _bc_host: window.location.host,
-
-            // _bc_param: window.location.search,
-
             refurl: document.referrer || '',
-
-            // 页面id
-            // _bc_pid: window.pageId || ''
         }, this.initOption.data || {})
     }
 
