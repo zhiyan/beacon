@@ -9,7 +9,7 @@
      */
     function Beacon(){
         this.initOption = $.extend({
-            event: true,
+            clk: true,
             uv: true,
             pv: true
         }, window.BEACON_INIT || {})
@@ -25,15 +25,17 @@
                 this.cookie('_utrace', this.uuid(), {expires:1, domain: domain})
             }
         }
-        
+
+        this.resetSession()
         this.initData()
 
-        if(this.initOption.event){
-            this.bindEvent()
+        if(this.initOption.clk){
+            this.bindClk()
         }
 
         if(this.initOption.pv){
             this.send('pv')
+            this.bindPv()
         }
 
         if(this.initOption.trigger){
@@ -45,10 +47,26 @@
         this.cache = []
     }
 
-    Beacon.prototype.version = '0.7'
+    Beacon.prototype.version = '1.0.0-alpha.1'
 
     Beacon.prototype.url = document.location.protocol + '//dt.daikuan.com/dt.gif'
     Beacon.prototype.errUrl = document.location.protocol + '//dt.daikuan.com/rd.gif'
+
+    Beacon.prototype.resetSession = function(){
+      // 记录session时间
+      this.session = +new Date()
+    }
+
+    Beacon.prototype.getSessionStatus = function(){
+    	// 30分钟会话时间
+    	var expired = 60 * 30 * 1000 
+    	var currentTime = +new Date()
+    	if(currentTime - this.session >= expired){
+    		this.resetSession()
+    		return false
+    	}
+    	return true
+    }
 
     /**
      * 初始化基本数据
@@ -92,9 +110,9 @@
     }
 
     /**
-     * 绑定事件
+     * 绑定点击事件
      */
-    Beacon.prototype.bindEvent = function(){
+    Beacon.prototype.bindClk = function(){
         var that = this
         $('body').on('click', '*', function(){
             if(that.detectElement(this)){
@@ -114,6 +132,20 @@
                 }
             }
         })
+    }
+
+    /**
+     * 绑定pv事件
+     */
+    Beacon.prototype.bindPv = function(){
+    	var that = this
+    	if('visibilityState' in document && 'hidden' in document){
+	    	document.addEventListener('visibilitychange', function(){
+	    		if(!document.hidden && !that.getSessionStatus()){
+	    			that.send('pv')
+	    		}
+	    	})
+    	}
     }
 
     /**
