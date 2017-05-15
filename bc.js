@@ -47,7 +47,7 @@ n.dequeue(a,b)};"inprogress"===e&&(e=c.shift(),d--),e&&("fx"===b&&c.unshift("inp
         this.cache = []
     }
 
-    Beacon.prototype.version = '1.0.0-alpha.3'
+    Beacon.prototype.version = '1.0.0'
 
     Beacon.prototype.url = document.location.protocol + '//dt.daikuan.com/dt.gif'
     Beacon.prototype.errUrl = document.location.protocol + '//dt.daikuan.com/rd.gif'
@@ -210,18 +210,19 @@ n.dequeue(a,b)};"inprogress"===e&&(e=c.shift(),d--),e&&("fx"===b&&c.unshift("inp
 
     Beacon.prototype.getXpath = function(element){
         var parent = element.parentElement
-        var path = element.tagName.toLowerCase()
+        var hasId = element.id
+        var path = hasId ? '#' + element.id : element.tagName.toLowerCase()
         var similar
 
-        if(element.id){
-            path += element.id ? '#' + element.id : ''
-        }else{
+        if(!hasId){
             path += element.className ? '.' + element.className.replace(/^\s+|\s+$/g,'').replace(/\s+/g,' ').split(' ').join('.') : ''
             similar = $(parent).find(path)
             path += similar.length > 1 ? '[' + similar.index(element) + ']' : ''
         }
 
-        return element === document.body ? '' : this.getXpath(parent) + '/' + path
+        return element === document.body ? '' : 
+        			 hasId ? '/' + path : 
+        			 this.getXpath(parent) + '/' + path
     }
     /**
      * 确认元素是否符合条件
@@ -230,6 +231,7 @@ n.dequeue(a,b)};"inprogress"===e&&(e=c.shift(),d--),e&&("fx"===b&&c.unshift("inp
         return !element.children.length && !$(element).closest('a').length
             || element.tagName === 'SELECT' 
             || element.tagName === 'A'
+            || element.tagName === 'BUTTON'
     }
 
     /**
