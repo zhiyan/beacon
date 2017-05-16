@@ -271,13 +271,7 @@ n.dequeue(a,b)};"inprogress"===e&&(e=c.shift(),d--),e&&("fx"===b&&c.unshift("inp
 
     Beacon.prototype.evt = {
     	api: document.location.protocol + '//dt.daikuan.com/dtevt.gif',
-    	blur: function(btype, ex1, ex2, ex3){
-    		this.send('blur', btype, ex1, ex2, ex3)
-    	},
-    	clk: function(btype, ex1, ex2, ex3){
-    		this.send('clk', btype, ex1, ex2, ex3)
-    	},
-    	send: function(evtname, btype, ex1, ex2, ex3){
+    	send: function(btype, evtname, ex1, ex2, ex3){
     		var sourceData = window.bc.data
     		var data = {
     			evtname: evtname,
