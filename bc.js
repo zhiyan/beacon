@@ -269,6 +269,33 @@ n.dequeue(a,b)};"inprogress"===e&&(e=c.shift(),d--),e&&("fx"===b&&c.unshift("inp
         this.send({type:3}, msg || '')
     }
 
+    Beacon.prototype.evt = {
+    	api: document.location.protocol + '//dt.daikuan.com/dtevt.gif',
+    	blur: function(btype, ex1, ex2, ex3){
+    		this.send('blur', btype, ex1, ex2, ex3)
+    	},
+    	clk: function(btype, ex1, ex2, ex3){
+    		this.send('clk', btype, ex1, ex2, ex3)
+    	},
+    	send: function(evtname, btype, ex1, ex2, ex3){
+    		var sourceData = window.bc.data
+    		var data = {
+    			evtname: evtname,
+    			btype: btype,
+    			ctype: /^m\./.test(document.domain) ? 'm' : 'pc',
+    			ex1: ex1 || '',
+    			ex2: ex2 || '',
+    			ex3: ex3 || '',
+    			uid: sourceData.uid,
+    			t: +new Date()
+    		}
+    		if(sourceData.pid){
+    			data.pid = sourceData.pid
+    		}
+    		new Image().src = this.api + '?' + $.param(data)
+    	}
+    }
+
     // 对外提供便捷方法
     $(['clk', 'pv', 'exp']).each(function(key, etype){
     	Beacon.prototype[etype] = function(data){
