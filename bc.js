@@ -276,7 +276,7 @@ n.dequeue(a,b)};"inprogress"===e&&(e=c.shift(),d--),e&&("fx"===b&&c.unshift("inp
     		var data = {
     			evtname: evtname,
     			btype: btype,
-    			ctype: /^m\./.test(document.domain) ? 'm' : 'pc',
+    			ctype: /^m\.|\.m\./.test(document.domain) ? 'm' : 'pc',
     			ex1: ex1 || '',
     			ex2: ex2 || '',
     			ex3: ex3 || '',
