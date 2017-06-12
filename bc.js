@@ -22,7 +22,7 @@ n.dequeue(a,b)};"inprogress"===e&&(e=c.shift(),d--),e&&("fx"===b&&c.unshift("inp
             		}else{
             			domain = '.' + document.domain
             		}
-                this.cookie('_utrace', this.uuid(), {expires:1, domain: domain})
+                this.cookie('_utrace', this.uuid(), {expires:999, domain: domain})
             }
         }
 
