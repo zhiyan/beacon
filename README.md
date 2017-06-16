@@ -39,4 +39,6 @@
     bc.clk({...})
     bc.pv({...})
     bc.exp({...})
+
+    bc.evt.send(btype, evtname, ex1, ex2, ex3)
 	
