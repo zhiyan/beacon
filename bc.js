@@ -4,6 +4,8 @@ n.dequeue(a,b)};"inprogress"===e&&(e=c.shift(),d--),e&&("fx"===b&&c.unshift("inp
 
     var $ = jQuery.noConflict(true)
 
+    var domain = /taoche/.test(documen.domain) ? 'dt.taoche.cn' : 'dt.daikuan.com'
+
     /**
      * Beacon system
      */
@@ -49,8 +51,8 @@ n.dequeue(a,b)};"inprogress"===e&&(e=c.shift(),d--),e&&("fx"===b&&c.unshift("inp
 
     Beacon.prototype.version = '1.1.0'
 
-    Beacon.prototype.url = document.location.protocol + '//dt.daikuan.com/dt.gif'
-    Beacon.prototype.errUrl = document.location.protocol + '//dt.daikuan.com/rd.gif'
+    Beacon.prototype.url = document.location.protocol + '//'+domain+'/dt.gif'
+    Beacon.prototype.errUrl = document.location.protocol + '//'+domain+'/rd.gif'
 
     Beacon.prototype.resetSession = function(){
       // 记录session时间
@@ -270,7 +272,7 @@ n.dequeue(a,b)};"inprogress"===e&&(e=c.shift(),d--),e&&("fx"===b&&c.unshift("inp
     }
 
     Beacon.prototype.evt = {
-    	api: document.location.protocol + '//dt.daikuan.com/dtevt.gif',
+    	api: document.location.protocol + '//'+domain+'/dtevt.gif',
     	send: function(btype, evtname, ex1, ex2, ex3){
     		var sourceData = window.bc.data
     		var data = {
