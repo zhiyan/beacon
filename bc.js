@@ -35,7 +35,7 @@ n.dequeue(a,b)};"inprogress"===e&&(e=c.shift(),d--),e&&("fx"===b&&c.unshift("inp
         }
     }
 
-    Beacon.prototype.version = '1.1.0'
+    Beacon.prototype.version = '1.3.0'
 
     Beacon.prototype.url = document.location.protocol + '//' + domain + '/dt.gif'
     Beacon.prototype.errUrl = document.location.protocol + '//' + domain + '/rd.gif'
@@ -243,23 +243,6 @@ n.dequeue(a,b)};"inprogress"===e&&(e=c.shift(),d--),e&&("fx"===b&&c.unshift("inp
             || element.tagName === 'SELECT' 
             || element.tagName === 'A'
             || element.tagName === 'BUTTON'
-    }
-
-    /**
-     * 生成uuid
-     */
-    Beacon.prototype.uuid = function() {
-        var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-            var r = Math.random()*16|0, v = c === 'x' ? r : (r&0x3|0x8)
-            return v.toString(16)
-        })
-
-        // 若uuid空的情况下（具体浏览器未知）, 保证拿到一个不重复的值
-        if(!uuid){
-            uuid = +new Date()+'-'+Math.round(Math.random()*100000)
-        }
-
-        return uuid
     }
 
     Beacon.prototype.setCache = function(element){
