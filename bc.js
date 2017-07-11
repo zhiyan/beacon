@@ -35,7 +35,7 @@ n.dequeue(a,b)};"inprogress"===e&&(e=c.shift(),d--),e&&("fx"===b&&c.unshift("inp
         }
     }
 
-    Beacon.prototype.version = '1.3.0'
+    Beacon.prototype.version = '2.0.0'
 
     Beacon.prototype.url = document.location.protocol + '//' + domain + '/dt.gif'
     Beacon.prototype.errUrl = document.location.protocol + '//' + domain + '/rd.gif'
