@@ -4,7 +4,7 @@ n.dequeue(a,b)};"inprogress"===e&&(e=c.shift(),d--),e&&("fx"===b&&c.unshift("inp
 
     var $ = jQuery.noConflict(true)
 
-    var domain = /taoche/.test(documen.domain) ? 'dt.taoche.cn' : 'dt.daikuan.com'
+    var domain = /taoche/.test(document.domain) ? 'dt.taoche.cn' : 'dt.daikuan.com'
 
     /**
      * Beacon system
