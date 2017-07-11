@@ -98,7 +98,7 @@ n.dequeue(a,b)};"inprogress"===e&&(e=c.shift(),d--),e&&("fx"===b&&c.unshift("inp
 
             requrl: window.location.href,
 
-            refurl: document.referrer || '',
+            refurl: document.referrer || ''
         }, this.initOption.data || {})
     }
 
@@ -137,7 +137,7 @@ n.dequeue(a,b)};"inprogress"===e&&(e=c.shift(),d--),e&&("fx"===b&&c.unshift("inp
                     etxt: $element.text().replace(/\s/g,'')
                 }
 
-                if(that.cache.indexOf(element) < 0){
+                if($.inArray(element, that.cache) < 0){
                     that.send(data)
                     that.setCache(element)
                 }
@@ -249,7 +249,7 @@ n.dequeue(a,b)};"inprogress"===e&&(e=c.shift(),d--),e&&("fx"===b&&c.unshift("inp
         var that = this
         this.cache.push(element)
         setTimeout(function(){
-            that.cache.splice(that.cache.indexOf(element), 1)
+            that.cache.splice($.inArray(element, that.cache), 1)
         },3000)
     }
 
