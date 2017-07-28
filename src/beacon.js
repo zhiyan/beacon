@@ -285,12 +285,12 @@ Beacon.prototype.evt = {
 		if(sourceData.pid){
 			data.pid = sourceData.pid
 		}
-		new Image().src = this.api + '?' + $.param(data)
+		new Image().src = this.api + '?' + util.param(data)
 	}
 }
 
 // 对外提供便捷方法
-util.each(['clk', 'pv', 'exp'], function(etype, key){
+util.each(['clk', 'pv', 'exp'], function(etype){
   Beacon.prototype[etype] = function(data){
     var params = data || {}
     params.etype = etype

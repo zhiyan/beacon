@@ -34,5 +34,14 @@ var util = {
 		}
 
 		return ret
+	},
+
+	param: function(obj){
+		var ret = ''
+		for(var i in obj){
+			ret += '&'+ i + '=' + window.encodeURIComponent(obj[i])
+		}
+
+		return ret.replace(/^&/, '')
 	}
 }
