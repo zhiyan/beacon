@@ -291,12 +291,12 @@ Beacon.prototype.evt = {
 }
 
 // 对外提供便捷方法
-$(['clk', 'pv', 'exp']).each(function(key, etype){
-	Beacon.prototype[etype] = function(data){
-		var params = data || {}
-		params.etype = etype
-		this.send(params)
-	}
+util.each(['clk', 'pv', 'exp'], function(etype, key){
+  Beacon.prototype[etype] = function(data){
+    var params = data || {}
+    params.etype = etype
+    this.send(params)
+  }
 })
 
 window.beacon = window.bc = new Beacon()

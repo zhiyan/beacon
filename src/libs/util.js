@@ -1,12 +1,20 @@
 var util = {
 	extend: function(){
 		var target = arguments[0]
-		for(var i = 1;i <= arguments.length; i++){
-			for(var key in arguments[i]){
-				target[key] = arguments[i][key]
+		var arr = Array.prototype.slice.call(arguments, 1)
+
+		this.each(arr, function(item){
+			for(var key in item){
+				target[key] = item[key]
 			}
-		}
+		})
 		return target
 	},
-	
+
+	each: function(arr, fn){
+		var key = 0
+		for(; key < arr.length; key++){
+			fn(arr[key], key)
+		}
+	}
 }
