@@ -110,23 +110,26 @@ Beacon.prototype.formatParams = function(params){
  */
 Beacon.prototype.bindClk = function(){
     var that = this
-    $('body').on('click', '*', function(){
-        if(that.detectElement(this)){
-            var element = $(this).closest('a')[0] || this
-            var tag = element.tagName.toLowerCase()
-            var data = {
-                etype:'clk',
-                etag: tag,
-                eid : that.getXpath(element),
-                etxt: util.text(text).replace(/\s/g,'')
-            }
-
-            if(that.cache.indexOf(element) < 0){
-                that.send(data)
-                that.setCache(element)
-            }
-        }
+    util.bindEvent('body', 'click', function(e){
+      console.log(e)
     })
+    // $('body').on('click', '*', function(){
+    //     if(that.detectElement(this)){
+    //         var element = $(this).closest('a')[0] || this
+    //         var tag = element.tagName.toLowerCase()
+    //         var data = {
+    //             etype:'clk',
+    //             etag: tag,
+    //             eid : that.getXpath(element),
+    //             etxt: util.text(text).replace(/\s/g,'')
+    //         }
+
+    //         if(that.cache.indexOf(element) < 0){
+    //             that.send(data)
+    //             that.setCache(element)
+    //         }
+    //     }
+    // })
 }
 
 /**
