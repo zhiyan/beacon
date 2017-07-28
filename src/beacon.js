@@ -114,12 +114,11 @@ Beacon.prototype.bindClk = function(){
         if(that.detectElement(this)){
             var element = $(this).closest('a')[0] || this
             var tag = element.tagName.toLowerCase()
-            var $element = $(element)
             var data = {
                 etype:'clk',
                 etag: tag,
-                eid : that.getXpath($element[0]),
-                etxt: $element.text().replace(/\s/g,'')
+                eid : that.getXpath(element),
+                etxt: util.text(text).replace(/\s/g,'')
             }
 
             if(that.cache.indexOf(element) < 0){
