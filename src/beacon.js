@@ -7,20 +7,20 @@ function Beacon(){
         pv: true
     }, window.BEACON_INIT || {})
 
-    if(!this.cookie('_utrace')){
+    if(!this.cookie(cookieName)){
   		var domain = document.domain.match(/\.[^\.]+\.[^\.]+$/)
   		if(domain && domain.length){
   			domain = domain[0]
   		}else{
   			domain = '.' + document.domain
   		}
-      this.cookie('_utrace', this.uuid(), {expires:999, domain: domain})
+      this.cookie(cookieName, this.uuid())
     }
     
     this.init()
 }
 
-Beacon.prototype.version = '4.0.0'
+Beacon.prototype.version = '4.1.0'
 
 Beacon.prototype.url = config.url
 Beacon.prototype.errUrl = config.errUrl
@@ -70,7 +70,7 @@ Beacon.prototype.getSessionStatus = function(){
 Beacon.prototype.initData = function(){
     this.data = $.extend({
 
-    		uid: this.cookie('_utrace'),
+    		uid: this.cookie(cookieName),
 
         // 屏幕尺寸
         scr: this.GetScreenSize(),
@@ -150,36 +150,45 @@ Beacon.prototype.bindPv = function(){
 
 /**
  * cookie operation
+ * @description  同时操作localStorage
  */
-Beacon.prototype.cookie = function( key , value , options ){
+Beacon.prototype.cookie = function( key , value ){
 
-    if (arguments.length > 1 && String(value) !== "[object Object]") {
-      options = options || {}
+    if (arguments.length > 1) {
+      var expires = new Date()
+      expires.setDate(expires.getDate() + 999)
 
-      if (value === null || value === undefined) {
-        options.expires = -1
+      if(window.localStorage){
+        window.localStorage[key] = value
       }
 
-      if (typeof options.expires === 'number') {
-        var days = options.expires, t = options.expires = new Date()
-        t.setDate(t.getDate() + days)
+      var domain = document.domain.match(/\.[^\.]+\.[^\.]+$/)
+      if(domain && domain.length){
+        domain = domain[0]
+      }else{
+        domain = '.' + document.domain
       }
-
-      value = String(value)
 
       return (document.cookie = [
-              encodeURIComponent(key), '=',
-              options.raw ? value : encodeURIComponent(value),
-              options.expires ? ';expires=' + options.expires.toUTCString() : '',
-              options.path ? ';path=' + options.path : ';path=/',
-              options.domain ? ';domain=' + options.domain : '',
-              options.secure ? ';secure' : ''
+              key, '=',
+              value,
+              ';expires=' + expires.toUTCString(),
+              ';path=/',
+              ';domain=' + domain
       ].join(''))
     }
 
-    options = value || {}
-    var result, decode = options.raw ? function (s) { return s } : decodeURIComponent
-    return (result = new RegExp('(?:^|; )' + encodeURIComponent(key) + '=([^;]*)').exec(document.cookie)) ? decode(result[1]) : null 
+    var result
+    var cookieValue = (result = new RegExp('(?:^|; )' + key + '=([^;]*)').exec(document.cookie)) ? result[1] : null 
+
+    if(window.localStorage){
+      var storageValue = window.localStorage[key]
+      !cookieValue && storageValue && this.cookie(key, storageValue)
+      cookieValue && !storageValue && (window.localStorage[key] = cookieValue)
+      return cookieValue || storageValue
+    }
+
+    return cookieValue
 }
 
 /**

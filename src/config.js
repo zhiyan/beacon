@@ -2,6 +2,7 @@ var domain = /taoche/.test(document.domain) ? 'dt.taoche.cn' : 'dt.daikuan.com'
 var filePath = '/dt.gif'
 var errFilePath = '/rd.gif'
 var evtFilePath = '/dtevt.gif'
+var cookieName = '_utrace'
 
 var config = {
 	url: document.location.protocol + '//' + domain + filePath,

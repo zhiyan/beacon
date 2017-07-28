@@ -1,3 +1,6 @@
+## 4.1.0 (2017-07-28)
+* 增加lcoalStorage判断，防止cookie被清除操作
+
 ## 4.0.0 (2017-07-28)
 * 恢复uid为uuid, 不采用fingerprint, 重复率太高
 
