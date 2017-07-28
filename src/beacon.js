@@ -2,7 +2,7 @@
  * Beacon system
  */
 function Beacon(){
-    this.initOption = $.extend({
+    this.initOption = util.extend({
         clk: true,
         pv: true
     }, window.BEACON_INIT || {})
@@ -68,7 +68,7 @@ Beacon.prototype.getSessionStatus = function(){
  * 初始化基本数据
  */
 Beacon.prototype.initData = function(){
-    this.data = $.extend({
+    this.data = util.extend({
 
     		uid: this.cookie(cookieName),
 
@@ -204,12 +204,12 @@ Beacon.prototype.send = function(params, msg){
     }
 
     if(typeof msg === 'object'){
-    	$.extend(params, msg)
+    	util.extend(params, msg)
     }else if(msg){
     	params.msg = msg
     }
 
-    new Image().src= ( params.type ? this.errUrl : this.url) + '?' + this.formatParams($.extend({t: +new Date() + Math.random()}, this.data, params))
+    new Image().src= ( params.type ? this.errUrl : this.url) + '?' + this.formatParams(util.extend({t: +new Date() + Math.random()}, this.data, params))
 }
 
 
