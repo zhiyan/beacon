@@ -122,7 +122,7 @@ Beacon.prototype.bindClk = function(){
                 etxt: $element.text().replace(/\s/g,'')
             }
 
-            if($.inArray(element, that.cache) < 0){
+            if(that.cache.indexOf(element) < 0){
                 that.send(data)
                 that.setCache(element)
             }
@@ -255,7 +255,7 @@ Beacon.prototype.setCache = function(element){
     var that = this
     this.cache.push(element)
     setTimeout(function(){
-        that.cache.splice($.inArray(element, that.cache), 1)
+        that.cache.splice(that.cache.indexOf(element), 1)
     },3000)
 }
 
