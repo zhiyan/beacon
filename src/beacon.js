@@ -2,29 +2,25 @@
  * Beacon system
  */
 function Beacon(){
-		var that = this
     this.initOption = $.extend({
         clk: true,
         pv: true
     }, window.BEACON_INIT || {})
 
     if(!this.cookie('_utrace')){
-    	new Fingerprint2().get(function(utrave){
-    		var domain = document.domain.match(/\.[^\.]+\.[^\.]+$/)
-    		if(domain && domain.length){
-    			domain = domain[0]
-    		}else{
-    			domain = '.' + document.domain
-    		}
-        that.cookie('_utrace', utrave, {expires:999, domain: domain})
-        that.init()
-			})
-    }else{
-    	this.init()
+  		var domain = document.domain.match(/\.[^\.]+\.[^\.]+$/)
+  		if(domain && domain.length){
+  			domain = domain[0]
+  		}else{
+  			domain = '.' + document.domain
+  		}
+      this.cookie('_utrace', this.uuid(), {expires:999, domain: domain})
     }
+    
+    this.init()
 }
 
-Beacon.prototype.version = '3.0.0'
+Beacon.prototype.version = '4.0.0'
 
 Beacon.prototype.url = config.url
 Beacon.prototype.errUrl = config.errUrl
@@ -232,6 +228,18 @@ Beacon.prototype.detectElement = function(element){
         || element.tagName === 'SELECT' 
         || element.tagName === 'A'
         || element.tagName === 'BUTTON'
+}
+
+/**
+ * 生成uuid
+ */
+Beacon.prototype.uuid = function() {
+    var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        var r = Math.random()*16|0, v = c === 'x' ? r : (r&0x3|0x8)
+        return v.toString(16)
+    })
+
+    return uuid
 }
 
 Beacon.prototype.setCache = function(element){
