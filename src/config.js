@@ -1,4 +1,5 @@
 var domain = /taoche/.test(document.domain) ? 'dt.taoche.cn' : 'dt.daikuan.com'
+// var domain = 'localhost'
 var filePath = '/dt.gif'
 var errFilePath = '/rd.gif'
 var evtFilePath = '/dtevt.gif'

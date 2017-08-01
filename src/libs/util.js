@@ -51,5 +51,23 @@ var util = {
 		} else if (elem.attachEvent) {
 			elem.attachEvent('on' + type, fn)
 		}
+	},
+
+	closest: function(el, tagName){
+		do{
+			if(el.nodeName.toLowerCase() === tagName){
+				return el
+			}
+		}while(el = el && el.parentNode)
+
+		return false
+	},
+
+	indexOf: function(el, arr){
+		for(var i =0; i < arr.length; i++){
+			if(el === arr[i]){
+				return i
+			}
+		}
 	}
 }

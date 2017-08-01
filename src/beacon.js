@@ -110,26 +110,25 @@ Beacon.prototype.formatParams = function(params){
  */
 Beacon.prototype.bindClk = function(){
     var that = this
-    util.bindEvent('body', 'click', function(e){
-      console.log(e)
-    })
-    // $('body').on('click', '*', function(){
-    //     if(that.detectElement(this)){
-    //         var element = $(this).closest('a')[0] || this
-    //         var tag = element.tagName.toLowerCase()
-    //         var data = {
-    //             etype:'clk',
-    //             etag: tag,
-    //             eid : that.getXpath(element),
-    //             etxt: util.text(text).replace(/\s/g,'')
-    //         }
+    util.bindEvent(document.body, 'click', function(e){
+      var target = e.target || e.srcElement || document
 
-    //         if(that.cache.indexOf(element) < 0){
-    //             that.send(data)
-    //             that.setCache(element)
-    //         }
-    //     }
-    // })
+      if(that.detectElement(target)){
+        var element = util.closest(target, 'a') || target
+        var tag = element.tagName.toLowerCase()
+        var data = {
+            etype:'clk',
+            etag: tag,
+            eid : that.getXpath(element),
+            etxt: util.text(element).replace(/\s/g,'')
+        }
+
+        if(that.cache.indexOf(element) < 0){
+            that.send(data)
+            that.setCache(element)
+        }
+      }
+    })
 }
 
 /**
@@ -223,8 +222,8 @@ Beacon.prototype.getXpath = function(element){
 
     if(!hasId){
         path += element.className ? '.' + element.className.replace(/^\s+|\s+$/g,'').replace(/\s+/g,' ').split(' ').join('.') : ''
-        similar = $(parent).find(path)
-        path += similar.length > 1 ? '[' + similar.index(element) + ']' : ''
+        similar = $(path, parent)
+        path += similar.length > 1 ? '[' + util.indexOf(element,similar) + ']' : ''
     }
 
     return element === document.body ? '' : 
@@ -235,7 +234,7 @@ Beacon.prototype.getXpath = function(element){
  * 确认元素是否符合条件
  */
 Beacon.prototype.detectElement = function(element){
-    return !element.children.length && !$(element).closest('a').length
+    return !element.children.length && !util.closest(element, 'a')
         || element.tagName === 'SELECT' 
         || element.tagName === 'A'
         || element.tagName === 'BUTTON'
