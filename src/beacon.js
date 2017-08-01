@@ -20,7 +20,7 @@ function Beacon(){
     this.init()
 }
 
-Beacon.prototype.version = '4.1.0'
+Beacon.prototype.version = '4.1.1'
 
 Beacon.prototype.url = config.url
 Beacon.prototype.errUrl = config.errUrl
