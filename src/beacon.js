@@ -110,10 +110,11 @@ Beacon.prototype.formatParams = function(params){
  */
 Beacon.prototype.bindClk = function(){
     var that = this
-    util.bindEvent(document.body, 'click', function(e){
-      var target = e.target || e.srcElement || document
+    util.bindEvent(document.body, 'click', function(){
+      var e = window.event || arguments[0]
+      var target = e.target || e.srcElement
 
-      if(that.detectElement(target)){
+      if(target && that.detectElement(target)){
         var element = util.closest(target, 'a') || target
         var tag = element.tagName.toLowerCase()
         var data = {
