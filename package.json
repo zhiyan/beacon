@@ -1,13 +1,14 @@
 {
   "name": "beacon",
-  "version": "4.1.0",
+  "version": "4.1.1",
   "description": "",
   "main": "bc.js",
   "directories": {
     "test": "test"
   },
   "scripts": {
-    "build": "gulp"
+    "build": "gulp",
+    "watch": "gulp watch"
   },
   "repository": {
     "type": "git",
