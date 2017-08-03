@@ -13,7 +13,7 @@ gulp.task('build', function(){
 	return gulp.src(fileList)
 		.pipe(concat('bc.js'))
 		.pipe(iife({useStrict: false}))
-		.pipe(uglify({ie8: true}))
+		.pipe(uglify({ie8: true, mangle: false}))
 		.pipe(gulp.dest('./dist/'))
 })
 
